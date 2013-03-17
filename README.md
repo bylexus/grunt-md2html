@@ -1,6 +1,6 @@
 # grunt-md2html
 
-Small Grunt MultiTask based on the nodejs package [node-markdown](https://github.com/andris9/node-markdown) to convert Markdown files to HTML, supporting Grunt >= 0.4.0
+Small Grunt MultiTask based on the nodejs package [marked](https://github.com/chjj/marked) to convert Markdown files to HTML, supporting Grunt >= 0.4.0
 
 ## Getting Started
 This plugin requires Grunt `~0.4.0`
@@ -69,6 +69,21 @@ Default value: `null`
 If basePath is set, you can use `'{BASEPATH}'` in your .md / layout file, which is expanded
 to a relative path from the actual output file to the given basePath. Useful to link
 static resources like stylesheets in the layout file
+
+#### options.markedOptions
+Type: `Object`
+Default value: `{}`
+
+Options to be set on the `marked` package, see https://github.com/chjj/marked for details. E.g.:
+
+```
+marked: {
+  gfm: false
+}
+```
+
+disables the GIT flavored markdown.
+
 
 #### options.separator
 Type: `String`
@@ -139,6 +154,14 @@ This example just demonstrates the different options:
 ```js
 grunt.initConfig({
   md2html: {
+      options: {
+        layout: 'path/to/layout.html',
+        basePath: 'path/to',
+        marked: {
+          gfm: false,
+          langPrefix: 'code-'
+        }
+      },
       multiple_files: {
         },
         files: [{
@@ -156,4 +179,5 @@ grunt.initConfig({
 
 ## Release History
 
+* 0.1.1: Changed Markdown parser: node-markdown replaced by marked
 * 0.1.0: Very first release, no testing yet

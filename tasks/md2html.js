@@ -18,10 +18,12 @@ module.exports = function(grunt) {
     var options = this.options({
       separator: '\n\n',
       basePath: null,
-      layout: null
+      layout: null,
+      markedOptions:{}
     });
 
-    var md = require("node-markdown").Markdown;
+    var marked = require("marked");
+    marked.setOptions(options.markedOptions);
     var html;
     var layoutFile = options.layout;
     var layout = null;
@@ -52,7 +54,7 @@ module.exports = function(grunt) {
 
       // Handle options.
       // src already contains the string containint the whole src content
-      html = md(src);
+      html = marked(src);
 
       // Check if we have to wrap a layout:
       if (!layout) {

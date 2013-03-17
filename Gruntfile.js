@@ -33,7 +33,8 @@ module.exports = function(grunt) {
       multiple_files: {
         options: {
           layout: 'test/fixtures/layout.html',
-          basePath: 'test/fixtures'
+          basePath: 'test/fixtures',
+          markedOptions: {gfm: true}
         },
         files: [{
           expand: true,
