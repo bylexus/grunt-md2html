@@ -1,6 +1,6 @@
 # grunt-md2html
 
-> Small Grunt MultiTask to convert Markdown files to HTML, supporting Grunt >= 0.4.0
+Small Grunt MultiTask based on the nodejs package [node-markdown](https://github.com/andris9/node-markdown) to convert Markdown files to HTML, supporting Grunt >= 0.4.0
 
 ## Getting Started
 This plugin requires Grunt `~0.4.0`
