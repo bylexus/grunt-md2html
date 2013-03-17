@@ -181,3 +181,10 @@ grunt.initConfig({
 
 * 0.1.1: Changed Markdown parser: node-markdown replaced by marked
 * 0.1.0: Very first release, no testing yet
+
+
+## License
+
+(c) 2013 Alexander Schenkel
+Licensed under the MIT License
+
