@@ -1,0 +1,47 @@
+{
+  "name": "grunt-md2html",
+  "description": "Small Grunt MultiTask to convert Markdown files to HTML, supporting Grunt >= 0.4.0",
+  "version": "0.1.0",
+  "homepage": "https://github.com/bylexus/grunt-md2html",
+  "author": {
+    "name": "Alexander Schenkel",
+    "email": "alex@alexi.ch",
+    "url": "http://www.alexi.ch/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bylexus/grunt-md2html.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bylexus/grunt-md2html/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/bylexus/grunt-md2html/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "node-markdown": "~0.1.1"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.1.2",
+    "grunt": "~0.4.0",
+    "node-markdown": "~0.1.1"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.0"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
+}
