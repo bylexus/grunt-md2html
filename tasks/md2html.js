@@ -61,10 +61,13 @@ module.exports = function(grunt) {
         layout = '{DOC}';
       }
 
-      var relPath = path.relative(path.dirname(f.dest), options.basePath || f.orig.dest) + '/';
-      html = layout.replace('{DOC}', html);
-      html = html.replace('{BASEPATH}', relPath);
-      html = html.replace('{DEST}', f.dest);
+      var relPath = path.relative(path.dirname(f.dest), options.basePath || f.orig.dest);
+      if (relPath.length === 0) {
+        relPath = './';
+      }
+      html = layout.replace(/\{DOC\}/g, html);
+      html = html.replace(/\{BASEPATH\}/g, relPath);
+      html = html.replace(/\{DEST\}/g, f.dest);
 
       // Write the destination file.
       grunt.file.write(f.dest, html);
