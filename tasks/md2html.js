@@ -63,7 +63,7 @@ module.exports = function(grunt) {
 
       var relPath = path.relative(path.dirname(f.dest), options.basePath || f.orig.dest);
       if (relPath.length === 0) {
-        relPath = './';
+        relPath = '.';
       }
       html = layout.replace(/\{DOC\}/g, html);
       html = html.replace(/\{BASEPATH\}/g, relPath);
