@@ -77,7 +77,7 @@ Default value: `{}`
 Options to be set on the `marked` package, see https://github.com/chjj/marked for details. E.g.:
 
 ```
-marked: {
+markedOptions: {
   gfm: false
 }
 ```
@@ -157,7 +157,7 @@ grunt.initConfig({
       options: {
         layout: 'path/to/layout.html',
         basePath: 'path/to',
-        marked: {
+        markedOptions: {
           gfm: false,
           langPrefix: 'code-'
         }
