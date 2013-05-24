@@ -50,7 +50,7 @@ Example layout file:
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="{BASEPATH}style.css">
+        <link rel="stylesheet" type="text/css" href="{BASEPATH}/style.css">
         <title></title>
     </head>
     <body>
@@ -110,8 +110,7 @@ In this example, all found .md files are converted to HTML and ONE html output f
 grunt.initConfig({
   md2html: {
       one_file: {
-        options: {
-        },
+        options: {},
         files: [{
           src: ['my/md/files/**/*.md'],
           dest: 'out/output.html'
@@ -130,7 +129,7 @@ Note that this is a base functionality of grunt's file expanding facility:
 grunt.initConfig({
   md2html: {
       multiple_files: {
-        },
+        options: {},
         files: [{
           expand: true,
           cwd: 'base/path/to/md/files',
@@ -140,7 +139,7 @@ grunt.initConfig({
         }]
       }
     }
-})
+});
 ```
 
 #### Options example
@@ -154,15 +153,14 @@ This example just demonstrates the different options:
 ```js
 grunt.initConfig({
   md2html: {
-      options: {
-        layout: 'path/to/layout.html',
-        basePath: 'path/to',
-        markedOptions: {
-          gfm: false,
-          langPrefix: 'code-'
-        }
-      },
       multiple_files: {
+        options: {
+          layout: 'path/to/layout.html',
+          basePath: 'path/to',
+          markedOptions: {
+            gfm: false,
+            langPrefix: 'code-'
+          }
         },
         files: [{
           expand: true,
@@ -173,7 +171,7 @@ grunt.initConfig({
         }]
       }
     }
-})
+});
 ```
 
 
