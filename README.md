@@ -179,7 +179,7 @@ grunt.initConfig({
 
 * 0.1.1: Changed Markdown parser: node-markdown replaced by marked
 * 0.1.0: Very first release, no testing yet
-
+* 0.1.5: Fixed: '$&' in html causes the tool to crash
 
 ## License
 
