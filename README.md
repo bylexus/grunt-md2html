@@ -181,6 +181,7 @@ grunt.initConfig({
 * 0.1.0: Very first release, no testing yet
 * 0.1.5: Fixed: '$&' in html causes the tool to crash
 * 0.1.6: Updated 'marked' dependency: now uses marked 0.2.10 as dependant version
+* 0.1.7: Updated 'marked' dependency: now uses marked 0.3.2
 
 ## License
 
