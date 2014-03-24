@@ -65,7 +65,7 @@ module.exports = function(grunt) {
       if (relPath.length === 0) {
         relPath = '.';
       }
-      html = layout.replace(/\{DOC\}/g, function() { return html });
+      html = layout.replace(/\{DOC\}/g, function() { return html; });
       html = html.replace(/\{BASEPATH\}/g, relPath);
       html = html.replace(/\{DEST\}/g, f.dest);
 

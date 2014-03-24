@@ -42,7 +42,7 @@ Type: `String`
 Default value: `null`
 
 A path to a layout file: A Layout file defines the global surrounding layout,
-e.g. an HTML header / footer. Within the Layout file you can then include the 
+e.g. an HTML header / footer. Within the Layout file you can then include the
 actual processed .md-file content.
 
 Example layout file:
@@ -180,9 +180,10 @@ grunt.initConfig({
 * 0.1.1: Changed Markdown parser: node-markdown replaced by marked
 * 0.1.0: Very first release, no testing yet
 * 0.1.5: Fixed: '$&' in html causes the tool to crash
+* 0.1.6: Updated 'marked' dependency: now uses marked 0.2.10 as dependant version
 
 ## License
 
-(c) 2013 Alexander Schenkel
+(c) 2013-2014 Alexander Schenkel
 Licensed under the MIT License
 
