@@ -2,7 +2,7 @@
 
 Small Grunt MultiTask based on the nodejs package [marked](https://github.com/chjj/marked) to convert Markdown files to HTML, supporting Grunt >= 0.4.0
 
-* Takes input .md-Files
+* Takes input Markdown-Files
 * process them using the grunt-internal template engine (lodash)
 * converts them to HTML either one-by-one or many-to-one
 
@@ -232,14 +232,13 @@ Created on <%= grunt.template.today('yyyy-mm-dd HH:MM:ss') %>.
 
 ## Release History
 
-* 0.2.0: Process MD files with the grunt-internal Template engine (lodash) first.
-         Keeping backwards-compatibility.
 * 0.1.1: Changed Markdown parser: node-markdown replaced by marked
 * 0.1.0: Very first release, no testing yet
 * 0.1.5: Fixed: '$&' in html causes the tool to crash
 * 0.1.6: Updated 'marked' dependency: now uses marked 0.2.10 as dependant version
 * 0.1.7: Updated 'marked' dependency: now uses marked 0.3.2
-
+* 0.2.0: Process MD files with the grunt-internal Template engine (lodash) first.
+         Keeping backwards-compatibility.
 ## License
 
 (c) 2013-2014 Alexander Schenkel
