@@ -9,6 +9,7 @@
 'use strict';
 
 module.exports = function(grunt) {
+    var path = require('path');
 
   // Project configuration.
   grunt.initConfig({
@@ -52,10 +53,25 @@ module.exports = function(grunt) {
           src: ['test/fixtures/one_file/**/*.md'],
           dest: 'tmp/one_file/output.html'
         }]
+      },
+
+      underscoreTemplating: {
+        options: {
+          layout: 'test/fixtures/underscoreLayout.html',
+          basePath: 'test/fixtures',
+          markedOptions: {gfm: true},
+          templateData: {
+            basename: function(src) {
+                return src.substr(src.lastIndexOf(path.sep)+1);
+            }
+          }
+        },
+        files: [{
+          src: ['test/fixtures/underscore_test/**/*.md'],
+          dest: 'tmp/underscore_test/output.html'
+        }]
       }
     },
-
-
 
     // Unit tests.
     nodeunit: {

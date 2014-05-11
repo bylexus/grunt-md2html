@@ -46,27 +46,27 @@ e.g. an HTML header / footer. Within the Layout file you can then include the
 actual processed .md-file content.
 
 Example layout file:
-```html
+```
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="{BASEPATH}/style.css">
+        <link rel="stylesheet" type="text/css" href="<%= basepath %>/style.css">
         <title></title>
     </head>
     <body>
-        {DOC}
+        <%= document %>
     </body>
 </html>
 ```
-This layout file adds an HTML skeleton around each processed output file, replacing BASEPATH
-and DOC (the processed content).
+This layout file adds an HTML skeleton around each processed output file, replacing the template
+strings `basepath` and `document ` (the processed content).
 
 
 #### options.basePath
 Type: `String`
 Default value: `null`
 
-If basePath is set, you can use `'{BASEPATH}'` in your .md / layout file, which is expanded
+If basePath is set, you can use `<%= basepath %>` in your .md / layout file, which is expanded
 to a relative path from the actual output file to the given basePath. Useful to link
 static resources like stylesheets in the layout file
 
@@ -84,6 +84,14 @@ markedOptions: {
 
 disables the GIT flavored markdown.
 
+#### options.templateData
+Type: `Object`
+Default value: `{}`
+
+Additional data which is passed to the template engine before the .md file is processed.
+The data object's content is directly available as template vars / functions. See Usage Examples
+for more information.
+
 
 #### options.separator
 Type: `String`
@@ -91,14 +99,15 @@ Default value: `'\n\n'`
 
 A string value that is used to concatenate the .md files if used in one-outputfile mode
 
-### Replacements
+### Template variables
 
-The following strings are replaced during the md-to-html process:
+Each markdown file is first processed by the Grunt-internal Template Engine (see http://gruntjs.com/api/grunt.template). In addition to the grunt-own template variables and functions, you can use the following
+variables which are replaced BEFORE processing the MD file:
 
-* `{DOC}`: Contains the processed HTML code for a destination file. Useful for a Layout file.
-* `{BASEPATH}`: Points relatively to the `dest` path of the actual output, or to the given basePath in the options.
-* `{DEST}`: The relative path to the actual destination file.
-
+* `document`: Contains the processed HTML code for a destination file. Useful for a Layout file. (For backward compatibility: use `{DOC}`)
+* `basepath`: Points relatively to the `dest` path of the actual output, or to the given basePath in the options. (For backward compatibility: use `{BASEPATH}`)
+* `destination`: The relative path to the actual destination file. (For backward compatibility: use `{DEST}`)
+* `src`: The original .md source file in which the variable occurs
 
 ### Usage Examples
 
@@ -146,7 +155,7 @@ grunt.initConfig({
 This example just demonstrates the different options:
 
 * layout: A layout file used for each processed output file
-* basePath: The `'{BASEPATH}'` variable which can be used within the docs points relatively to the basePath
+* basePath: The `<%= basepath %>` template variable which can be used within the docs points relatively to the basePath
 * separator: concatenator string when using multiple md files which go to one output file
 
 
@@ -175,8 +184,52 @@ grunt.initConfig({
 ```
 
 
+#### Template example
+This example demonstrates the usage of the pre-processing Template engine which can be used
+to process arbitary javascript variable / functions:
+
+##### grunt config
+```js
+grunt.initConfig({
+  md2html: {
+      multiple_files: {
+        options: {
+          basePath: 'path/to',
+          // Provide the function `basename` and a variable `author` to the templates
+          templateData: {
+            basename: function(src) {
+                return src.substr(src.lastIndexOf(path.sep)+1);
+            },
+            author: process.env.USER
+
+          },
+        },
+        files: [{
+          expand: true,
+          cwd: 'base/path/to/md/files',
+          src: ['**/*.md'],
+          dest: 'output',
+          ext: '.html'
+        }]
+      }
+    }
+});
+```
+
+##### Template .md file
+```
+Hello. This is an example written by <%= author %>.
+It comes from the file <%= basename(src) %>, and ends in the file <%= destination %>.
+Created on <%= grunt.template.today('yyyy-mm-dd HH:MM:ss') %>.
+```
+
+
+
+
 ## Release History
 
+* 0.2.0: Process MD files with the grunt-internal Template engine (lodash) first.
+         Keeping backwards-compatibility.
 * 0.1.1: Changed Markdown parser: node-markdown replaced by marked
 * 0.1.0: Very first release, no testing yet
 * 0.1.5: Fixed: '$&' in html causes the tool to crash

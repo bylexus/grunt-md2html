@@ -1,4 +1,4 @@
-/*
+/**
  * grunt-md2html - Small Grunt MultiTask to convert Markdown files to HTML, supporting Grunt >= 0.4.0
  * https://github.com/bylexus/grunt-md2html
  *
@@ -10,25 +10,24 @@
 
 module.exports = function(grunt) {
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
-
   grunt.registerMultiTask('md2html', 'Small Grunt MultiTask to convert Markdown files to HTML, supporting Grunt >= 0.4.0', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       separator: '\n\n',
       basePath: null,
       layout: null,
-      markedOptions:{}
+      markedOptions:{},
+      templateData: {}
     });
 
     var marked = require("marked");
-    marked.setOptions(options.markedOptions);
     var html;
     var layoutFile = options.layout;
     var layout = null;
-
     var path = require('path');
+
+    marked.setOptions(options.markedOptions);
+
     if (layoutFile && grunt.file.exists(layoutFile)) {
       grunt.log.writeln('Using layout file: ' + layoutFile);
       layout = grunt.file.read(layoutFile);
@@ -38,6 +37,14 @@ module.exports = function(grunt) {
     // Iterate over all specified file groups.
     var me = this;
     this.files.forEach(function(f) {
+      var relPath = path.relative(path.dirname(f.dest), options.basePath || f.orig.dest);
+      if (relPath.length === 0) {
+        relPath = '.';
+      }
+
+      options.templateData.basepath = relPath;
+      options.templateData.destination = f.dest;
+
       // Concat specified files.
       var src = f.src.filter(function(filepath) {
         // Warn on and remove invalid source files (if nonull was set).
@@ -49,11 +56,16 @@ module.exports = function(grunt) {
         }
       }).map(function(filepath) {
         // Read file source.
-        return grunt.file.read(filepath);
+        var content = grunt.file.read(filepath);
+        options.templateData.src = filepath;
+        return grunt.template.process(content,{data: options.templateData});
       }).join(grunt.util.normalizelf(options.separator));
 
+      delete options.templateData.src;
+      src = grunt.template.process(src,{data: options.templateData});
+
       // Handle options.
-      // src already contains the string containint the whole src content
+      // src already contains the string containing the whole src content
       html = marked(src);
 
       // Check if we have to wrap a layout:
@@ -61,16 +73,15 @@ module.exports = function(grunt) {
         layout = '{DOC}';
       }
 
-      var relPath = path.relative(path.dirname(f.dest), options.basePath || f.orig.dest);
-      if (relPath.length === 0) {
-        relPath = '.';
-      }
-      html = layout.replace(/\{DOC\}/g, function() { return html; });
-      html = html.replace(/\{BASEPATH\}/g, relPath);
-      html = html.replace(/\{DEST\}/g, f.dest);
+      options.templateData.document = html;
+
+      layout = grunt.template.process(layout,{data: options.templateData});
+      layout = layout.replace(/\{DOC\}/g, function() { return html; });
+      layout = layout.replace(/\{BASEPATH\}/g, relPath);
+      layout = layout.replace(/\{DEST\}/g, f.dest);
 
       // Write the destination file.
-      grunt.file.write(f.dest, html);
+      grunt.file.write(f.dest, layout);
 
       // Print a success message.
       grunt.log.writeln('File "' + f.dest + '" created.');
