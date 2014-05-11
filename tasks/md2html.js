@@ -41,6 +41,7 @@ module.exports = function(grunt) {
       if (relPath.length === 0) {
         relPath = '.';
       }
+      var layoutHtml = layout;
 
       options.templateData.basepath = relPath;
       options.templateData.destination = f.dest;
@@ -62,26 +63,24 @@ module.exports = function(grunt) {
       }).join(grunt.util.normalizelf(options.separator));
 
       delete options.templateData.src;
-      src = grunt.template.process(src,{data: options.templateData});
 
       // Handle options.
       // src already contains the string containing the whole src content
       html = marked(src);
 
       // Check if we have to wrap a layout:
-      if (!layout) {
-        layout = '{DOC}';
+      if (!layoutHtml) {
+        layoutHtml = '{DOC}';
       }
 
       options.templateData.document = html;
-
-      layout = grunt.template.process(layout,{data: options.templateData});
-      layout = layout.replace(/\{DOC\}/g, function() { return html; });
-      layout = layout.replace(/\{BASEPATH\}/g, relPath);
-      layout = layout.replace(/\{DEST\}/g, f.dest);
+      layoutHtml = grunt.template.process(layoutHtml,{data: options.templateData});
+      layoutHtml = layoutHtml.replace(/\{DOC\}/g, function() { return html; });
+      layoutHtml = layoutHtml.replace(/\{BASEPATH\}/g, relPath);
+      layoutHtml = layoutHtml.replace(/\{DEST\}/g, f.dest);
 
       // Write the destination file.
-      grunt.file.write(f.dest, layout);
+      grunt.file.write(f.dest, layoutHtml);
 
       // Print a success message.
       grunt.log.writeln('File "' + f.dest + '" created.');

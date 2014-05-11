@@ -239,6 +239,9 @@ Created on <%= grunt.template.today('yyyy-mm-dd HH:MM:ss') %>.
 * 0.1.7: Updated 'marked' dependency: now uses marked 0.3.2
 * 0.2.0: Process MD files with the grunt-internal Template engine (lodash) first.
          Keeping backwards-compatibility.
+* 0.2.1: Fixing Relative Path bug: introduced in 0.2.0, the basepath was no longer relative to the options.basePath set in config in scenarios using more than one directory level.
+
+
 ## License
 
 (c) 2013-2014 Alexander Schenkel
