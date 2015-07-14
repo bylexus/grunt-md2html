@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bylexus/grunt-md2html.svg?branch=master)](https://travis-ci.org/bylexus/grunt-md2html)
+
 # grunt-md2html
 
 Small Grunt MultiTask based on the nodejs package [marked](https://github.com/chjj/marked) to convert Markdown files to HTML, supporting Grunt >= 0.4.0
