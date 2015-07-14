@@ -27,24 +27,31 @@ exports.md2html = {
     // setup here if necessary
     done();
   },
-  default_options: function(test) {
-    /*test.expect(1);
+  one_file: function(test) {
+    var actFile1 = grunt.file.read('tmp/one_file/output.html'),
+        expectedFile1 = grunt.file.read('test/expected/one_file/output.html');
 
-    var actual = grunt.file.read('tmp/default_options');
-    var expected = grunt.file.read('test/expected/default_options');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
-    */
-    test.ok(true);
+    test.equal(actFile1, expectedFile1);
     test.done();
   },
-  custom_options: function(test) {
-    /*test.expect(1);
 
-    var actual = grunt.file.read('tmp/custom_options');
-    var expected = grunt.file.read('test/expected/custom_options');
-    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
-    */
-    test.ok(true);
+  multiple_files: function(test) {
+    var actFile1 = grunt.file.read('tmp/multiple_files/file1.html'),
+        expectedFile1 = grunt.file.read('test/expected/multiple_files/file1.html'),
+
+        actFile2 = grunt.file.read('tmp/multiple_files/file2.html'),
+        expectedFile2 = grunt.file.read('test/expected/multiple_files/file2.html');
+
+    test.equal(actFile1, expectedFile1);
+    test.equal(actFile2, expectedFile2);
     test.done();
   },
+
+  underscoreTemplating: function(test) {
+    var actFile1 = grunt.file.read('tmp/underscore_test/output.html'),
+        expectedFile1 = grunt.file.read('test/expected/underscore_test/output.html');
+
+    test.equal(actFile1, expectedFile1);
+    test.done();
+  }
 };
