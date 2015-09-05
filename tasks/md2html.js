@@ -17,6 +17,12 @@ module.exports = function(grunt) {
       basePath: null,
       layout: null,
       markedOptions:{},
+      highlightjs: {
+        enabled: false,
+        style: 'monokai',
+        compressStyle: true,
+        options: {}
+      },
       templateData: {}
     });
 
@@ -25,6 +31,29 @@ module.exports = function(grunt) {
     var layoutFile = options.layout;
     var layout = null;
     var path = require('path');
+
+    // Enable and configure highlight.js, if required:
+    if (options.highlightjs && options.highlightjs.enabled) {
+        var stylePath = path.join(path.dirname(require.resolve('highlight.js')),'..','styles',(options.highlightjs.style||'monokai')+'.css'),
+            CleanCSS = require('clean-css');
+
+        // load css style file and compress it, if required:
+        // the style string is available in the template as highlightjs-style var:
+        if (grunt.file.exists(stylePath)) {
+            options.templateData.highlightjs_style = grunt.file.read(stylePath);
+
+            if (options.highlightjs.compressStyle) {
+                options.templateData.highlightjs_style = new CleanCSS().minify(options.templateData.highlightjs_style).styles;
+            }
+        }
+
+        // enable marked's synced highlight callback to apply highlightjs:
+        options.markedOptions.highlight = function (code) {
+            var hl = require('highlight.js');
+            hl.configure(options.highlightjs.options || {});
+            return hl.highlightAuto(code).value;
+        };
+    }
 
     marked.setOptions(options.markedOptions);
 

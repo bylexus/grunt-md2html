@@ -7,6 +7,7 @@ Small Grunt MultiTask based on the nodejs package [marked](https://github.com/ch
 * Takes input Markdown-Files
 * process them using the grunt-internal template engine (lodash)
 * converts them to HTML either one-by-one or many-to-one
+* optionally highlight code parts using highligh.js with optional style string
 
 ## Getting Started
 This plugin requires Grunt `~0.4.0`
@@ -115,6 +116,36 @@ variables which are replaced BEFORE processing the MD file:
 * `destination`: The relative path to the actual destination file. (For backward compatibility: use `{DEST}`)
 * `src`: The original .md source file in which the variable occurs
 
+
+#### options.highlightjs
+Type: `Object`
+Default value:
+```
+options.highlightjs: {
+    enabled: false,      // disabled by default
+    style: 'monokai',    // highlightjs default theme (theme file name without .css)
+    compressStyle: true, // minified version of the string based style sheet
+    options: {}          // options for the highlightjs constructor
+}
+```
+
+md2html includes [highlightjs](https://highlightjs.org/) if you want to highlight source code in the markdown file.
+Code blocks then are enriched by highlightjs with HTML and style elements.
+
+Enable code highlighting by setting `enabled` to true.
+
+You have two options for styling / theming your highlightjs source code:
+
+1. Include a highlightjs CSS file in your layout manually (see example [here](https://highlightjs.org/download/) )
+2. Use the stringified CSS version in your template: grunt-md2html reads the original highlightjs
+   style sheet as CSS string, and allows you to use it directly in your markdown file by outputting
+   the template variable `highlightjs_style`:
+```
+<style>
+  <%= highlightjs_style %>
+</style>
+```
+
 ### Usage Examples
 
 #### Single HTML file output
@@ -190,9 +221,11 @@ grunt.initConfig({
 ```
 
 
-#### Template example
+#### Template example, including highlighjs
+
 This example demonstrates the usage of the pre-processing Template engine which can be used
-to process arbitary javascript variable / functions:
+to process arbitary javascript variable / functions. It also demonstrates code
+highlighting using highlightjs:
 
 ##### grunt config
 ```js
@@ -207,7 +240,11 @@ grunt.initConfig({
                 return src.substr(src.lastIndexOf(path.sep)+1);
             },
             author: process.env.USER
-
+          },
+          highlightjs: {
+            enabled: true,
+            style: 'paraiso.dark',
+            compressStyle: true
           },
         },
         files: [{
@@ -224,16 +261,28 @@ grunt.initConfig({
 
 ##### Template .md file
 ```
+<style type="text/css"><%= highlightjs_style %></style>
+
 Hello. This is an example written by <%= author %>.
 It comes from the file <%= basename(src) %>, and ends in the file <%= destination %>.
 Created on <%= grunt.template.today('yyyy-mm-dd HH:MM:ss') %>.
-```
 
+And now some highlighted code:
+
+<pre><code>
+    var fact = function(f) {
+        if (f > 1) {
+            return f * (fact(f-1));
+        } else return 1;
+    }
+</code></pre>
+```
 
 
 
 ## Release History
 
+* 0.1.1: Changed Markdown parser: node-markdown replaced by marked
 * 0.1.1: Changed Markdown parser: node-markdown replaced by marked
 * 0.1.0: Very first release, no testing yet
 * 0.1.5: Fixed: '$&' in html causes the tool to crash
@@ -243,10 +292,10 @@ Created on <%= grunt.template.today('yyyy-mm-dd HH:MM:ss') %>.
          Keeping backwards-compatibility.
 * 0.2.1: Fixing Relative Path bug: introduced in 0.2.0, the basepath was no longer relative to the options.basePath set in config in scenarios using more than one directory level.
 * 0.2.2: Updated dev environment and added unit tests
-
+* 0.3.0: highlightjs support
 
 ## License
 
-(c) 2013-2015 Alexander Schenkel
+(c) 2013-2016 Alexander Schenkel
 Licensed under the MIT License
 

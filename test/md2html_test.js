@@ -47,6 +47,23 @@ exports.md2html = {
     test.done();
   },
 
+  highlight: function(test) {
+    var actFile1 = grunt.file.read('tmp/highlight/output.html'),
+        expectedFile1 = grunt.file.read('test/expected/highlight/output.html');
+
+    test.equal(actFile1, expectedFile1);
+    test.done();
+  },
+
+  highlight_compressed: function(test) {
+    var actFile1 = grunt.file.read('tmp/highlight/output_compressed.html'),
+        expectedFile1 = grunt.file.read('test/expected/highlight/output_compressed.html');
+
+    test.equal(actFile1, expectedFile1);
+    test.done();
+  },
+
+
   underscoreTemplating: function(test) {
     var actFile1 = grunt.file.read('tmp/underscore_test/output.html'),
         expectedFile1 = grunt.file.read('test/expected/underscore_test/output.html');

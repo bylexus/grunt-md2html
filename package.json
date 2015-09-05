@@ -1,7 +1,7 @@
 {
   "name": "grunt-md2html",
   "description": "Small Grunt MultiTask to convert Markdown files to HTML, supporting Grunt >= 0.4.0",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "homepage": "https://github.com/bylexus/grunt-md2html",
   "author": {
     "name": "Alexander Schenkel",
@@ -24,6 +24,8 @@
     "test": "grunt test"
   },
   "dependencies": {
+    "clean-css": "^3.4.1",
+    "highlight.js": "^8.7.0",
     "marked": "^0.3.2"
   },
   "devDependencies": {
@@ -40,8 +42,5 @@
     "markdown",
     "html",
     "markdown2html"
-  ],
-  "scripts": {
-    "test": "grunt test"
-  }
+  ]
 }

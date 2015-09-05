@@ -55,6 +55,34 @@ module.exports = function(grunt) {
         }]
       },
 
+      highlight: {
+        options: {
+            highlightjs: {
+                enabled: true,
+                compressStyle: true,
+                style: 'paraiso.dark'
+            }
+        },
+        files: [{
+          src: ['test/fixtures/highlight/**/*.md'],
+          dest: 'tmp/highlight/output_compressed.html'
+        }]
+      },
+
+      highlight_noncompressed: {
+        options: {
+            highlightjs: {
+                enabled: true,
+                compressStyle: false,
+                style: 'paraiso.dark'
+            }
+        },
+        files: [{
+          src: ['test/fixtures/highlight/**/*.md'],
+          dest: 'tmp/highlight/output.html'
+        }]
+      },
+
       underscoreTemplating: {
         options: {
           layout: 'test/fixtures/underscoreLayout.html',
