@@ -130,11 +130,13 @@ options.highlightjs: {
 ```
 
 md2html includes [highlightjs](https://highlightjs.org/) if you want to highlight source code in the markdown file.
-Code blocks then are enriched by highlightjs with HTML and style elements.
+Code blocks then are enriched by highlightjs with HTML and style elements: The HTML is parsed and code blocks are sent through highlightjs before writing the final HTML.
 
-Enable code highlighting by setting `enabled` to true.
+Enable code highlighting / highlightjs tags by setting `enabled` to true.
 
-You have two options for styling / theming your highlightjs source code:
+To style the enriched code blocks, you have to include an official highlightjs CSS file:
+
+You have two options for adding highlightjs styling / theming:
 
 1. Include a highlightjs CSS file in your layout manually (see example [here](https://highlightjs.org/download/) )
 2. Use the stringified CSS version in your template: grunt-md2html reads the original highlightjs
@@ -145,6 +147,36 @@ You have two options for styling / theming your highlightjs source code:
   <%= highlightjs_style %>
 </style>
 ```
+
+An example:
+
+```html
+<!-- layout HTML file -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+          <%= highlightjs_style %>
+        </style>
+    </head>
+    <body>
+        <%= document %>
+    </body>
+</html>
+```
+
+<pre><code>
+Markdown file with code snippet:
+=================================
+Now follows some javascript code:
+
+```
+var f = function(var1) {
+    console.log(var1);
+}
+```
+</code></pre>
+
 
 ### Usage Examples
 
@@ -293,9 +325,11 @@ And now some highlighted code:
 * 0.2.1: Fixing Relative Path bug: introduced in 0.2.0, the basepath was no longer relative to the options.basePath set in config in scenarios using more than one directory level.
 * 0.2.2: Updated dev environment and added unit tests
 * 0.3.0: highlightjs support
+* 0.3.1:
+  * changed dependencies to support grunt 1.x
+  * updated highlightjs related documentation
 
 ## License
 
 (c) 2013-2016 Alexander Schenkel
 Licensed under the MIT License
-
