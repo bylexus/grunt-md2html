@@ -47,6 +47,14 @@ exports.md2html = {
     test.done();
   },
 
+  includes: function(test) {
+    var actFile1 = grunt.file.read('tmp/includes/index.html'),
+        expectedFile1 = grunt.file.read('test/expected/includes/index.html');
+
+    test.equal(actFile1, expectedFile1);
+    test.done();
+  },
+
   highlight: function(test) {
     var actFile1 = grunt.file.read('tmp/highlight/output.html'),
         expectedFile1 = grunt.file.read('test/expected/highlight/output.html');

@@ -45,6 +45,26 @@ module.exports = function(grunt) {
           ext: '.html'
         }]
       },
+
+      include: {
+        options: {
+          basePath: 'test/fixtures/includes',
+          markedOptions: {gfm: true}
+        },
+        files: [{
+          expand: true,
+          cwd: 'test/fixtures/includes',
+          src: ['**/*.md'],
+            filter: function(src) {
+                if (path.basename(src)[0] === '_') {
+                    return false;
+                } else { return true; }
+            },
+          dest: 'tmp/includes',
+          ext: '.html'
+        }]
+      },
+
       one_file: {
         options: {
           separator: '\n\n'

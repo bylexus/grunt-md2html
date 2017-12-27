@@ -310,7 +310,63 @@ And now some highlighted code:
 </code></pre>
 ```
 
+#### Include other .md files from within .md
 
+You can also include (load) other .md files within your .md files. This makes the generation of a separate TOC file, which is included in each output file, very easy:
+
+##### Example: The main file with a TOC
+
+Note that the file path must be relative to your Gruntfile:
+
+```
+An MD file. Include the TOC here:
+<% print(grunt.file.read('gruntfile/rel/path/to/md/file.md')) %>
+```
+
+##### The separate TOC file
+```
+Table of contents:
+
+* foo
+* bar
+```
+
+The output html then looks as follows:
+
+```
+An MD file. Include the TOC here:
+Table of contents:
+
+* foo
+* bar
+```
+
+##### Use '_' in your included file names to filter them from output creation
+
+If you don't want to have an output file generated for each included file, you can use a file name convention:
+
+* Start each included filename with a '_'
+* Use the `filter` property in the Gruntifle's `file` definition.
+
+Example:
+```javascript
+grunt.initConfig({
+    md2html: {
+      includeTest: {
+        files: [{
+          expand: true,
+          cwd: 'docs',
+          src: ['**/*.md'],
+          // Filter away all files that begin with '_':
+          filter: function(src) {
+            if (path.basename(src)[0] === '_') { return false; } else { return true; }
+          },
+          dest: 'output',
+          ext: '.html'
+        }]
+      }
+});
+```
 
 ## Release History
 
