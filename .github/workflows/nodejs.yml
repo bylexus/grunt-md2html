@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [0.12.x, 10.x, 12.x]
+        node-version: [0.12.x, 12.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -24,7 +24,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: sudo apt-get update && sudo apt-get install -y plantuml graphviz
+    - run: sudo apt-get update
+    - run: sudo apt-get install -y plantuml graphviz
+    - run: npm install
     - run: npm test
       env:
         CI: true

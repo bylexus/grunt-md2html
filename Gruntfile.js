@@ -132,7 +132,7 @@ module.exports = function(grunt) {
       plantuml_local: {
         options: {
           plantuml: {
-            exec: "java -jar ~/bin/plantuml.jar"
+            exec: "plantuml"
           }
         },
         files: [
