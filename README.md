@@ -514,6 +514,9 @@ grunt.initConfig({
 * 0.4.0:
   * Adding embedded PlantUML support
   * Updating dependencies
+0.4.1:
+  * Fixing bug: if no PlantuML matches were found, but a plantuml config present, matches was null
+  * minor textual changes
 
 ## License
 
