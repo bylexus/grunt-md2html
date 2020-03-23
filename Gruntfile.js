@@ -84,7 +84,7 @@ module.exports = function(grunt) {
           highlightjs: {
             enabled: true,
             compressStyle: true,
-            style: "paraiso.dark"
+            style: "paraiso-dark"
           }
         },
         files: [
@@ -100,7 +100,7 @@ module.exports = function(grunt) {
           highlightjs: {
             enabled: true,
             compressStyle: false,
-            style: "paraiso.dark"
+            style: "paraiso-dark"
           }
         },
         files: [
@@ -129,13 +129,32 @@ module.exports = function(grunt) {
           }
         ]
       },
+      plantuml_local: {
+        options: {
+          plantuml: {
+            exec: "java -jar ~/bin/plantuml.jar"
+          }
+        },
         files: [
           {
-            src: ["test/fixtures/plantuml/**/*.md"],
+            src: ["test/fixtures/plantuml/output.md"],
             dest: "tmp/plantuml/output.html"
           }
         ]
-      }
+      },
+      plantuml_server: {
+        options: {
+          plantuml: {
+            renderServerUrl: "http://www.plantuml.com/plantuml"
+          }
+        },
+        files: [
+          {
+            src: ["test/fixtures/plantuml/output-server.md"],
+            dest: "tmp/plantuml/output-server.html"
+          }
+        ]
+      },
     },
 
     // Unit tests.

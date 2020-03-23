@@ -84,5 +84,27 @@ exports.md2html = {
 
     test.equal(actFile1, expectedFile1);
     test.done();
+  },
+
+  plantuml: function(test) {
+    var actFile1 = grunt.file.read("tmp/plantuml/output.html"),
+      expectedFile1 = grunt.file.read(
+        "test/expected/plantuml/output.html"
+      );
+
+    test.equal(actFile1, expectedFile1);
+    test.ok(grunt.file.exists('tmp/plantuml/myimage.png'));
+    test.done();
+  },
+
+  plantuml_remote: function(test) {
+    var actFile1 = grunt.file.read("tmp/plantuml/output-server.html"),
+      expectedFile1 = grunt.file.read(
+        "test/expected/plantuml/output-server.html"
+      );
+
+    test.equal(actFile1, expectedFile1);
+    test.ok(grunt.file.exists('tmp/plantuml/myimage-remote.png'));
+    test.done();
   }
 };

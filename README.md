@@ -8,6 +8,34 @@ Small Grunt MultiTask based on the nodejs package [marked](https://github.com/ch
 * process them using the grunt-internal template engine (lodash)
 * converts them to HTML either one-by-one or many-to-one
 * optionally highlight code parts using highligh.js with optional style string
+* Supports embedded [ PlantUML ](https://plantuml.com/) to directly render images from PlantUML Code
+
+* [Getting Started](#getting-started)
+* [The "md2html" task](#the-md2html-task)
+  * [Overview](#overview)
+  * [Options](#options)
+    * [options.layout](#optionslayout)
+    * [options.basePath](#optionsbasepath)
+    * [options.markedOptions](#optionsmarkedoptions)
+    * [options.templateData](#optionstemplatedata)
+    * [options.separator](#optionsseparator)
+  * [Template variables](#template-variables)
+    * [options.highlightjs](#optionshighlightjs)
+    * [options.plantuml](#optionsplantuml)
+  * [Usage Examples](#usage-examples)
+    * [Single HTML file output](#single-html-file-output)
+    * [One HTML file per md file output](#one-html-file-per-md-file-output)
+    * [Options example](#options-example)
+    * [Template example, including highlighjs](#template-example-including-highlighjs)
+      * [grunt config](#grunt-config)
+      * [Template .md file](#template-md-file)
+    * [Include other .md files from within .md](#include-other-md-files-from-within-md)
+      * [Example: The main file with a TOC](#example-the-main-file-with-a-toc)
+      * [The separate TOC file](#the-separate-toc-file)
+      * [Use '_' in your included file names to filter them from output creation](#use-_-in-your-included-file-names-to-filter-them-from-output-creation)
+    * [PlantUML example](#plantuml-example)
+* [Release History](#release-history)
+* [License](#license)
 
 ## Getting Started
 This plugin requires Grunt `~0.4.0`
@@ -177,6 +205,28 @@ var f = function(var1) {
 ```
 </code></pre>
 
+#### options.plantuml
+* Type: `Object`
+* Default value: null
+* Available configs:
+```
+options.plantuml: {
+     // Local run:
+     // Full execution command of PlantUML, without options:
+    exec: 'java -jar plantuml.jar'
+    // Remote run:
+    // Provide the base URL for the PlantUML Render Servlet:
+    renderServerUrl: "http://www.plantuml.com/plantuml"
+}
+```
+
+Either **exec** or **renderServerUrl** is needed:
+
+* If you have a local plantuml binary / JAR file, provide the full execution command in the `exec`property.
+  The command is appended with PlantUML options, e.g. `java -jar plantuml.jar -tpng inputfile.html`
+* If you want to use a remote PlantUML render server (see https://plantuml.com/server), provide the base URL for the render service
+  with the `renderServerUrl` property. The diagram code is URL-encoded and appended to the URL, for example:
+  http://www.plantuml.com/plantuml/png/UDehoIp9ILNmhLG8o4dCAmdrzL5moKnCBqhCvKhEIImkLaZBprUevb80WgJ48Yk5u9AYpBnqhbe031uI8G00`
 
 ### Usage Examples
 
@@ -368,6 +418,81 @@ grunt.initConfig({
 });
 ```
 
+#### PlantUML example
+
+You can directly embed [PlantUML](https://plantuml.com/) code into your markdown/html files:
+
+```text
+<!-- document.md: -->
+Markdown with embedded PlantUML
+-------------------------------
+
+Here comes my Diagram:
+
+@startuml name-of-image
+class Foo {
+}
+class Bar {
+}
+Foo <|-- Bar
+@enduml
+
+... and another:
+
+@startuml name-of-2nd-image
+Bob -> Alice : hello
+@enduml
+```
+
+It is important to define the imagename `@startuml [imgname]`: This will be used as the
+image filename (plus ending).
+
+The snippets are then parsed on build time, images are generated and replaced with their
+respective image markdown tags:
+
+```text
+<!-- document.md: -->
+Markdown with embedded PlantUML
+-------------------------------
+
+Here comes my Diagram:
+
+![name-of-image](name-of-image.png)
+
+... and another:
+
+![name-of-2nd-image](name-of-2nd-image.png)
+```
+
+The Gruntfile must enable either local or remote PlantUML rendering settings:
+
+```js
+// Gruntfile.js:
+grunt.initConfig({
+  md2html: {
+      some_diagrams: {
+        options: {
+            plantuml: {
+                // Local plantuml executable:
+                exec: '/usr/bin/plantuml',
+                // ... or remote render server:
+                renderServerUrl: "http://www.plantuml.com/plantuml"
+            }
+        },
+
+        files: [{
+          expand: true,
+          cwd: 'base/path/to/md/files',
+          src: ['**/*.md'],
+          dest: 'output',
+          ext: '.html'
+        }]
+      }
+    }
+});
+```
+
+
 ## Release History
 
 * 0.1.1: Changed Markdown parser: node-markdown replaced by marked
@@ -384,8 +509,11 @@ grunt.initConfig({
 * 0.3.1:
   * changed dependencies to support grunt 1.x
   * updated highlightjs related documentation
+* 0.4.0:
+  * Adding embedded PlantUML support
+  * Updating dependencies
 
 ## License
 
-(c) 2013-2016 Alexander Schenkel
+(c) 2013-2020 Alexander Schenkel
 Licensed under the MIT License

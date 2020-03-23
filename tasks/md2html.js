@@ -2,13 +2,15 @@
  * grunt-md2html - Small Grunt MultiTask to convert Markdown files to HTML, supporting Grunt >= 0.4.0
  * https://github.com/bylexus/grunt-md2html
  *
- * Copyright (c) 2013 Alexander Schenkel
+ * Copyright (c) 2013-2020 Alexander Schenkel
  * Licensed under the MIT license.
  */
 
 "use strict";
 
 module.exports = function(grunt) {
+  var helpers = require("../lib/helpers.js");
+
   grunt.registerMultiTask(
     "md2html",
     "Small Grunt MultiTask to convert Markdown files to HTML, supporting Grunt >= 0.4.0",
@@ -28,6 +30,7 @@ module.exports = function(grunt) {
         templateData: {}
       });
 
+      var done = this.async();
       var marked = require("marked");
       var html;
       var layoutFile = options.layout;
@@ -72,7 +75,7 @@ module.exports = function(grunt) {
       }
 
       // Iterate over all specified file groups.
-      var me = this;
+      var promises = [];
       this.files.forEach(function(f) {
         var relPath = path.relative(
           path.dirname(f.dest),
@@ -109,31 +112,41 @@ module.exports = function(grunt) {
 
         delete options.templateData.src;
 
-        // Handle options.
-        // src already contains the string containing the whole src content
-        html = marked(src);
+        // PlantUML extraction: This is async, so
+        // the rest of the task must wait:
+        var promise = helpers
+          .extractPlantUMLContent(src, f.dest, options, grunt)
+          .then(function(src) {
+            // Handle options.
+            // src already contains the string containing the whole src content
+            html = marked(src);
 
-        // Check if we have to wrap a layout:
-        if (!layoutHtml) {
-          layoutHtml = "{DOC}";
-        }
+            // Check if we have to wrap a layout:
+            if (!layoutHtml) {
+              layoutHtml = "{DOC}";
+            }
 
-        options.templateData.document = html;
-        layoutHtml = grunt.template.process(layoutHtml, {
-          data: options.templateData
-        });
-        layoutHtml = layoutHtml.replace(/\{DOC\}/g, function() {
-          return html;
-        });
-        layoutHtml = layoutHtml.replace(/\{BASEPATH\}/g, relPath);
-        layoutHtml = layoutHtml.replace(/\{DEST\}/g, f.dest);
+            options.templateData.document = html;
+            layoutHtml = grunt.template.process(layoutHtml, {
+              data: options.templateData
+            });
+            layoutHtml = layoutHtml.replace(/\{DOC\}/g, function() {
+              return html;
+            });
+            layoutHtml = layoutHtml.replace(/\{BASEPATH\}/g, relPath);
+            layoutHtml = layoutHtml.replace(/\{DEST\}/g, f.dest);
 
-        // Write the destination file.
-        grunt.file.write(f.dest, layoutHtml);
+            // Write the destination file.
+            grunt.file.write(f.dest, layoutHtml);
 
-        // Print a success message.
-        grunt.log.writeln('File "' + f.dest + '" created.');
-      });
+            // Print a success message.
+            grunt.log.writeln('File "' + f.dest + '" created.');
+            setTimeout(function() {
+            }.bind(this), 1);
+          }.bind(this))
+          promises.push(promise)
+      }.bind(this));
+      Promise.all(promises).then(done).catch(done);
     }
   );
 };

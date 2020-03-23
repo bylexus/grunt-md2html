@@ -1,5 +1,8 @@
 language: node_js
 node_js:
   - 0.12
-before_install: npm install -g grunt-cli
+before_install:
+    - sudo apt-get update
+    - sudo apt-get install -y plantuml graphviz
+    - npm install -g grunt-cli
 install: npm install
