@@ -10,6 +10,8 @@ Small Grunt MultiTask based on the nodejs package [marked](https://github.com/ch
 * optionally highlight code parts using highligh.js with optional style string
 * Supports embedded [ PlantUML ](https://plantuml.com/) to directly render images from PlantUML Code
 
+## Table of Contents
+* [Table of Contents](#table-of-contents)
 * [Getting Started](#getting-started)
 * [The "md2html" task](#the-md2html-task)
   * [Overview](#overview)
