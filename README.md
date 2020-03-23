@@ -2,7 +2,9 @@
 
 # grunt-md2html
 
-Small Grunt MultiTask based on the nodejs package [marked](https://github.com/chjj/marked) to convert Markdown files to HTML, supporting Grunt >= 0.4.0
+Small Grunt MultiTask based on the nodejs package [marked](https://github.com/chjj/marked) to convert Markdown files to HTML.
+
+**Note:** Since version 0.5.0, this Grunt MultiTask needs `nodejs >= 8` and `grunt >= 1.0.0`.
 
 * Takes input Markdown-Files
 * process them using the grunt-internal template engine (lodash)
@@ -40,7 +42,7 @@ Small Grunt MultiTask based on the nodejs package [marked](https://github.com/ch
 * [License](#license)
 
 ## Getting Started
-This plugin requires Grunt `~0.4.0`
+This plugin requires Grunt `^1.0.0`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
@@ -517,6 +519,13 @@ grunt.initConfig({
 0.4.1:
   * Fixing bug: if no PlantuML matches were found, but a plantuml config present, matches was null
   * minor textual changes
+0.5.0:
+  * Dropping legacy support:
+    * NodeJS >= 8 is needed
+    * Grunt >= 1.0.0 is needed
+  * Fixing Regex `s` flag lack - replaced by `[\s\S]`
+  * Fixing some nasty bugs introduced in 0.4.x
+  * Updated linting and testing framework
 
 ## License
 

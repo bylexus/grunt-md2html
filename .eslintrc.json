@@ -1,0 +1,42 @@
+{
+    "root": true,
+    "extends": ["eslint:recommended", "prettier"],
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "plugins": ["prettier"],
+    "rules": {
+        "prettier/prettier": [
+            "error",
+            {
+                "singleQuote": true,
+                "tabWidth": 4,
+                "printWidth": 120
+            }
+        ],
+        "no-unused-vars": [
+            "error",
+            {
+                "vars": "all",
+                "args": "none"
+            }
+        ],
+        "semi": ["error", "always"],
+        "curly": "error",
+        "eqeqeq": "error",
+        "no-eval": "error",
+        "no-loop-func": "error",
+        "radix": "error",
+        "comma-dangle": "error",
+        "no-undef": "error"
+    },
+    "globals": {
+        "describe": false,
+        "it": false,
+        "expect": false
+    }
+}
