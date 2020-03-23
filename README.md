@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/bylexus/grunt-md2html.svg?branch=master)](https://travis-ci.org/bylexus/grunt-md2html)
+![Build Status](https://github.com/bylexus/grunt-md2html/workflows/grunt-md2html%20tests/badge.svg?branch=master)
 
 # grunt-md2html
 
