@@ -526,6 +526,7 @@ grunt.initConfig({
   * Fixing Regex `s` flag lack - replaced by `[\s\S]`
   * Fixing some nasty bugs introduced in 0.4.x
   * Updated linting and testing framework
+0.5.1: Bugfix: basepath variable not evaluated correctly on multiple files
 
 ## License
 
