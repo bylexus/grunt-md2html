@@ -10,9 +10,12 @@ describe('A suite', function () {
         const actFile1 = grunt.file.read('tmp/multiple_files/file1.html'),
             expectedFile1 = grunt.file.read('spec/expected/multiple_files/file1.html'),
             actFile2 = grunt.file.read('tmp/multiple_files/file2.html'),
-            expectedFile2 = grunt.file.read('spec/expected/multiple_files/file2.html');
+            expectedFile2 = grunt.file.read('spec/expected/multiple_files/file2.html'),
+            actFile3 = grunt.file.read('tmp/multiple_files/subfolder/file3.html'),
+            expectedFile3 = grunt.file.read('spec/expected/multiple_files/subfolder/file3.html');
         expect(actFile1).toEqual(expectedFile1);
         expect(actFile2).toEqual(expectedFile2);
+        expect(actFile3).toEqual(expectedFile3);
     });
 
     it('md2html:includes', function () {
