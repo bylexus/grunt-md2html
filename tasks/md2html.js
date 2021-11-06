@@ -109,7 +109,7 @@ module.exports = function (grunt) {
             let promise = helpers.extractPlantUMLContent(src, f.dest, options, grunt).then((src) => {
                 // Handle options.
                 // src already contains the string containing the whole src content
-                html = marked(src);
+                html = marked.parse(src);
 
                 // Check if we have to wrap a layout:
                 if (!layoutHtml) {

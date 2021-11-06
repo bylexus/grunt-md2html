@@ -4,7 +4,7 @@
 
 Small Grunt MultiTask based on the nodejs package [marked](https://github.com/chjj/marked) to convert Markdown files to HTML.
 
-**Note:** Since version 0.5.0, this Grunt MultiTask needs `nodejs >= 8` and `grunt >= 1.0.0`.
+**Note:** Since version 0.6.0, this Grunt MultiTask needs `nodejs >= 12` and `grunt >= 1.0.0`.
 
 * Takes input Markdown-Files
 * process them using the grunt-internal template engine (lodash)
@@ -13,33 +13,33 @@ Small Grunt MultiTask based on the nodejs package [marked](https://github.com/ch
 * Supports embedded [ PlantUML ](https://plantuml.com/) to directly render images from PlantUML Code
 
 ## Table of Contents
-* [Table of Contents](#table-of-contents)
-* [Getting Started](#getting-started)
-* [The "md2html" task](#the-md2html-task)
-  * [Overview](#overview)
-  * [Options](#options)
-    * [options.layout](#optionslayout)
-    * [options.basePath](#optionsbasepath)
-    * [options.markedOptions](#optionsmarkedoptions)
-    * [options.templateData](#optionstemplatedata)
-    * [options.separator](#optionsseparator)
-  * [Template variables](#template-variables)
-    * [options.highlightjs](#optionshighlightjs)
-    * [options.plantuml](#optionsplantuml)
-  * [Usage Examples](#usage-examples)
-    * [Single HTML file output](#single-html-file-output)
-    * [One HTML file per md file output](#one-html-file-per-md-file-output)
-    * [Options example](#options-example)
-    * [Template example, including highlighjs](#template-example-including-highlighjs)
-      * [grunt config](#grunt-config)
-      * [Template .md file](#template-md-file)
-    * [Include other .md files from within .md](#include-other-md-files-from-within-md)
-      * [Example: The main file with a TOC](#example-the-main-file-with-a-toc)
-      * [The separate TOC file](#the-separate-toc-file)
-      * [Use '_' in your included file names to filter them from output creation](#use-_-in-your-included-file-names-to-filter-them-from-output-creation)
-    * [PlantUML example](#plantuml-example)
-* [Release History](#release-history)
-* [License](#license)
+- [Table of Contents](#table-of-contents)
+- [Getting Started](#getting-started)
+- [The "md2html" task](#the-md2html-task)
+  - [Overview](#overview)
+  - [Options](#options)
+    - [options.layout](#optionslayout)
+    - [options.basePath](#optionsbasepath)
+    - [options.markedOptions](#optionsmarkedoptions)
+    - [options.templateData](#optionstemplatedata)
+    - [options.separator](#optionsseparator)
+  - [Template variables](#template-variables)
+    - [options.highlightjs](#optionshighlightjs)
+    - [options.plantuml](#optionsplantuml)
+  - [Usage Examples](#usage-examples)
+    - [Single HTML file output](#single-html-file-output)
+    - [One HTML file per md file output](#one-html-file-per-md-file-output)
+    - [Options example](#options-example)
+    - [Template example, including highlighjs](#template-example-including-highlighjs)
+      - [grunt config](#grunt-config)
+      - [Template .md file](#template-md-file)
+    - [Include other .md files from within .md](#include-other-md-files-from-within-md)
+      - [Example: The main file with a TOC](#example-the-main-file-with-a-toc)
+      - [The separate TOC file](#the-separate-toc-file)
+      - [Use '_' in your included file names to filter them from output creation](#use-_-in-your-included-file-names-to-filter-them-from-output-creation)
+    - [PlantUML example](#plantuml-example)
+- [Release History](#release-history)
+- [License](#license)
 
 ## Getting Started
 This plugin requires Grunt `^1.0.0`
