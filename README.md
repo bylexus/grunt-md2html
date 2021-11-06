@@ -526,8 +526,12 @@ grunt.initConfig({
   * Fixing Regex `s` flag lack - replaced by `[\s\S]`
   * Fixing some nasty bugs introduced in 0.4.x
   * Updated linting and testing framework
+0.5.1: Bugfix: basepath variable not evaluated correctly on multiple files
+0.6.0: 
+  * Updated dependencies: we use now marked 4 and highlightjs 11.
+  * nodejs >= 12.0 is now required
 
 ## License
 
-(c) 2013-2020 Alexander Schenkel
+(c) 2013-2021 Alexander Schenkel
 Licensed under the MIT License

@@ -29,7 +29,6 @@ module.exports = function (grunt) {
         });
 
         let done = this.async();
-        let html;
         let layoutFile = options.layout;
         let layout = null;
 
@@ -72,14 +71,17 @@ module.exports = function (grunt) {
         // Iterate over all specified file groups.
         let promises = [];
         this.files.forEach((f) => {
+            // Create hoisted copy of template data, as we modify it in this function
+            let templateData = Object.assign({}, options.templateData);
             let relPath = path.relative(path.dirname(f.dest), options.basePath || f.orig.dest);
+
             if (relPath.length === 0) {
                 relPath = '.';
             }
             let layoutHtml = layout;
 
-            options.templateData.basepath = relPath;
-            options.templateData.destination = f.dest;
+            templateData.basepath = relPath;
+            templateData.destination = f.dest;
 
             // Concat specified files.
             let src = f.src
@@ -95,30 +97,30 @@ module.exports = function (grunt) {
                 .map((filepath) => {
                     // Read file source.
                     let content = grunt.file.read(filepath);
-                    options.templateData.src = filepath;
+                    templateData.src = filepath;
                     return grunt.template.process(content, {
-                        data: options.templateData
+                        data: templateData
                     });
                 })
                 .join(grunt.util.normalizelf(options.separator));
 
-            delete options.templateData.src;
+            delete templateData.src;
 
             // PlantUML extraction: This is async, so
             // the rest of the task must wait:
             let promise = helpers.extractPlantUMLContent(src, f.dest, options, grunt).then((src) => {
                 // Handle options.
                 // src already contains the string containing the whole src content
-                html = marked.parse(src);
+                let html = marked.parse(src);
 
                 // Check if we have to wrap a layout:
                 if (!layoutHtml) {
                     layoutHtml = '{DOC}';
                 }
 
-                options.templateData.document = html;
+                templateData.document = html;
                 layoutHtml = grunt.template.process(layoutHtml, {
-                    data: options.templateData
+                    data: templateData
                 });
                 layoutHtml = layoutHtml.replace(/\{DOC\}/g, html);
                 layoutHtml = layoutHtml.replace(/\{BASEPATH\}/g, relPath);
