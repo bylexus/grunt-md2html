@@ -1,6 +1,6 @@
 {
     "root": true,
-    "extends": ["eslint:recommended", "prettier"],
+    "extends": ["eslint:recommended", "prettier", "plugin:json/recommended"],
     "parserOptions": {
         "ecmaVersion": 8
     },
