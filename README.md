@@ -143,10 +143,53 @@ A string value that is used to concatenate the .md files if used in one-outputfi
 Each markdown file is first processed by the Grunt-internal Template Engine (see http://gruntjs.com/api/grunt.template). In addition to the grunt-own template variables and functions, you can use the following
 variables which are replaced BEFORE processing the MD file:
 
-* `document`: Contains the processed HTML code for a destination file. Useful for a Layout file. (For backward compatibility: use `{DOC}`)
+* `document`: Contains the processed HTML code for a destination file. Useful for a Layout file. (For backward compatibility: use `{DOC}`).<br />
+  **Note:** `document` is ONLY available in a layout file, not in a single source .md file.
 * `basepath`: Points relatively to the `dest` path of the actual output, or to the given basePath in the options. (For backward compatibility: use `{BASEPATH}`)
 * `destination`: The relative path to the actual destination file. (For backward compatibility: use `{DEST}`)
-* `src`: The original .md source file in which the variable occurs
+* `src`: The original .md source file in which the variable occurs. **NOTE:** In a layout template file (see below), this variable is an array: The grunt job can concat multiple files into one destination file.
+
+`src` needs to be treatened differently for source files and layout files:
+
+* in a source .md file, `src` is the path (string) to the original .md file
+* in a layout template file, `src` is an array: A grunt job can concat multiple files into
+  one destination, in a grunt files config like this:
+```js
+// Gruntfile.js
+module.exports = function (grunt) {
+    grunt.initConfig({
+        md2html: {
+            'multifiles': {
+                options: {
+                    layout: 'layout.html',
+                },
+                files: [
+                    {
+                        // multiple file to 1 dest:
+                        src: ['multi_1.md', 'multi_2.md'],
+                        dest: 'output.html'
+                    }
+                ]
+            }
+        }
+    });
+};
+```
+
+So make sure to use `src` appropriately:
+
+```
+// multi_1.md:
+Source file: <%= src %>
+```
+
+```
+// layout.html:
+Source files:
+<% src.forEach(function(f){ %>
+- <%= f %>
+<% }) %>
+```
 
 
 #### options.highlightjs
@@ -516,20 +559,22 @@ grunt.initConfig({
 * 0.4.0:
   * Adding embedded PlantUML support
   * Updating dependencies
-0.4.1:
+* 0.4.1:
   * Fixing bug: if no PlantuML matches were found, but a plantuml config present, matches was null
   * minor textual changes
-0.5.0:
+* 0.5.0:
   * Dropping legacy support:
     * NodeJS >= 8 is needed
     * Grunt >= 1.0.0 is needed
   * Fixing Regex `s` flag lack - replaced by `[\s\S]`
   * Fixing some nasty bugs introduced in 0.4.x
   * Updated linting and testing framework
-0.5.1: Bugfix: basepath variable not evaluated correctly on multiple files
-0.6.0: 
+* 0.5.1: Bugfix: basepath variable not evaluated correctly on multiple files
+* 0.6.0: 
   * Updated dependencies: we use now marked 4 and highlightjs 11.
   * nodejs >= 12.0 is now required
+* 0.6.1:
+  * Bugfix (Issue #23): `src` variable was not available in layout templates.
 
 ## License
 

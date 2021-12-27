@@ -74,6 +74,7 @@ module.exports = function (grunt) {
             // Create hoisted copy of template data, as we modify it in this function
             let templateData = Object.assign({}, options.templateData);
             let relPath = path.relative(path.dirname(f.dest), options.basePath || f.orig.dest);
+            let collectedSrcFiles = [];
 
             if (relPath.length === 0) {
                 relPath = '.';
@@ -98,13 +99,17 @@ module.exports = function (grunt) {
                     // Read file source.
                     let content = grunt.file.read(filepath);
                     templateData.src = filepath;
+                    collectedSrcFiles.push(filepath);
                     return grunt.template.process(content, {
                         data: templateData
                     });
                 })
                 .join(grunt.util.normalizelf(options.separator));
 
-            delete templateData.src;
+            // join source files: if we concated multiple files
+            // into one output file, we have multiple sources here:
+            // so templateData.src is an array for the layout file:
+            templateData.src = collectedSrcFiles;
 
             // PlantUML extraction: This is async, so
             // the rest of the task must wait:

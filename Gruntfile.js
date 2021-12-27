@@ -58,6 +58,43 @@ module.exports = function (grunt) {
                 ]
             },
 
+            'template-vars-no-layout': {
+                options: {
+                    basePath: 'tmp/template-vars/my/base'
+                },
+                files: [
+                    {
+                        // single file
+                        src: 'spec/fixtures/template-vars/one_to_one.md',
+                        dest: 'tmp/template-vars/one_to_one.html'
+                    },
+                    {
+                        // multiple file to 1 dest:
+                        src: ['spec/fixtures/template-vars/multi_1.md', 'spec/fixtures/template-vars/multi_2.md'],
+                        dest: 'tmp/template-vars/multiple.html'
+                    }
+                ]
+            },
+
+            'template-vars-layout': {
+                options: {
+                    layout: 'spec/fixtures/template-vars/layout.html',
+                    basePath: 'tmp/template-vars/my/base'
+                },
+                files: [
+                    {
+                        // single file
+                        src: 'spec/fixtures/template-vars/one_to_one.md',
+                        dest: 'tmp/template-vars/single-layout.html'
+                    },
+                    {
+                        // multiple file to 1 dest:
+                        src: ['spec/fixtures/template-vars/multi_1.md', 'spec/fixtures/template-vars/multi_2.md'],
+                        dest: 'tmp/template-vars/multiple-layout.html'
+                    }
+                ]
+            },
+
             one_file: {
                 options: {
                     separator: '\n\n'

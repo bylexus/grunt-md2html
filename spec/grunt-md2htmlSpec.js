@@ -1,5 +1,5 @@
 const grunt = require('grunt');
-describe('A suite', function () {
+describe('md2html suite', function () {
     it('md2html:one_file', function () {
         const actFile1 = grunt.file.read('tmp/one_file/output.html'),
             expectedFile1 = grunt.file.read('spec/expected/one_file/output.html');
@@ -57,5 +57,28 @@ describe('A suite', function () {
             expectedFile1 = grunt.file.read('spec/expected/plantuml/output-server.html');
         expect(actFile1).toEqual(expectedFile1);
         expect(actFile1).toBeTruthy(grunt.file.exists('tmp/plantuml/myimage-remote.png'));
+    });
+
+    describe('md2html:template_vars', function () {
+        it('single file, no layout', function () {
+            const actFile1 = grunt.file.read('tmp/template-vars/one_to_one.html'),
+                expectedFile1 = grunt.file.read('spec/expected/template-vars/one_to_one.html');
+            expect(actFile1).toEqual(expectedFile1);
+        });
+        it('multiple files to one, no layout', function () {
+            const actFile1 = grunt.file.read('tmp/template-vars/multiple.html'),
+                expectedFile1 = grunt.file.read('spec/expected/template-vars/multiple.html');
+            expect(actFile1).toEqual(expectedFile1);
+        });
+        it('single file, with layout', function () {
+            const actFile1 = grunt.file.read('tmp/template-vars/single-layout.html'),
+                expectedFile1 = grunt.file.read('spec/expected/template-vars/single-layout.html');
+            expect(actFile1).toEqual(expectedFile1);
+        });
+        it('multiple files, with layout', function () {
+            const actFile1 = grunt.file.read('tmp/template-vars/multiple-layout.html'),
+                expectedFile1 = grunt.file.read('spec/expected/template-vars/multiple-layout.html');
+            expect(actFile1).toEqual(expectedFile1);
+        });
     });
 });
