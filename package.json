@@ -1,7 +1,7 @@
 {
     "name": "grunt-md2html",
     "description": "Small Grunt MultiTask to convert Markdown files to HTML",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "homepage": "https://github.com/bylexus/grunt-md2html",
     "author": {
         "name": "Alexander Schenkel",
