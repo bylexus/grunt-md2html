@@ -213,7 +213,7 @@ To style the enriched code blocks, you have to include an official highlightjs C
 
 You have two options for adding highlightjs styling / theming:
 
-1. Include a highlightjs CSS file in your layout manually (see example [here](https://highlightjs.org/download/) )
+1. Include a highlightjs CSS file in your layout manually (see example [here](https://highlightjs.org/download/) ). If you use this method then don't add highlightjs to your options in the gruntfile or it will run twice.
 2. Use the stringified CSS version in your template: grunt-md2html reads the original highlightjs
    style sheet as CSS string, and allows you to use it directly in your markdown file by outputting
    the template variable `highlightjs_style`:
